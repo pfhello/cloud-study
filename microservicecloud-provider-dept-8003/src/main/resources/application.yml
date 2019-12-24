@@ -1,0 +1,42 @@
+server:
+  port: 8003
+
+mybatis:
+  type-aliases-package: cn.itcast.pojo #pojo类的包
+  mapper-locations: classpath:mapper/**/*.xml #扫描mapper
+  configuration:
+    map-underscore-to-camel-case: true #驼峰命名法
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql
+    cache-enabled: true #开启二级缓存
+
+spring:
+  application:
+    name: microservicecloud-dept
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/cloud03?serverTimezone=UTC
+    username: root
+    password: 1234
+    type: com.alibaba.druid.pool.DruidDataSource
+    dbcp2:
+      min-idle: 5            #数据库连接池的最小维持连接数
+      initial-size: 5        #初始化连接数
+      max-total: 5           #最大连接数
+      max-wait-millis: 2000  #等待连接获取的最大超时时间
+
+eureka:
+  client: #客户端注册进eureka服务内
+    service-url:
+     #defaultZone: http://127.0.0.1:7001/eureka 单机版
+     #注册进eureka集群
+     defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+  instance:
+    instance-id: microservicecloud-dept8003 #服务别名
+    prefer-ip-address: true    #访问路径可以显示ip
+
+info:
+   app.name: microservicecloud-dept
+   company.name: cn.itcast.cloud
+   build.artifactId: ${project.artifactId}
+   build.version: ${project.version}
+
